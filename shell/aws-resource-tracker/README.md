@@ -60,4 +60,47 @@ set -x
 set +x
 ```
 
-## Example output
+## Automating with cron
+
+To run the report automatically every day at 6 PM:
+
+1. Open your crontab:
+```bash
+   crontab -e
+```
+2. Add this line (update the paths to match where you cloned the repo):
+0 18 * * * /home/ubuntu/Projects/shell/aws-resource-tracker/adeena.sh >> /home/ubuntu/tracker.log 2>&1
+
+
+3. Save and exit. Verify it was added:
+```bash
+   crontab -l
+```
+
+From then on, the script runs unattended every day at the scheduled time, appending output (and any errors) to `tracker.log`.
+
+## How it works (brief)
+
+The script runs four AWS CLI calls in sequence:
+```bash
+aws s3 ls
+aws ec2 describe-instances | jq '.Reservations[].Instances[].InstanceId'
+aws lambda list-functions
+aws iam list-users
+```
+The EC2 call is piped through `jq` to pull out just the `InstanceId` field from the nested JSON response, instead of dumping the full (much larger) instance description.
+
+## Limitations / next steps
+
+- This is a learning-project scope (4 services, single AWS account/region, no error retries).
+- In production, this kind of tracking is usually pushed to a monitoring/dashboard tool (e.g., CloudWatch, a cost dashboard, Slack/email alerts) rather than a flat text file.
+- Possible extensions: multi-region support, cost estimates via Cost Explorer API, S3 bucket sizes, unattached EBS volume detection, Slack/email delivery of the report.
+
+## License
+
+MIT
+
+## Author
+
+Adeena Aziz
+EOF
