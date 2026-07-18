@@ -1,6 +1,6 @@
 AWS Resource Usage Tracker (Shell Script)
 
-A lightweight Bash script that reports on AWS resource usage — S3, EC2, Lambda, and IAM users — and can be scheduled to run automatically via cron. Built as a DevOps learning project (Day 7 of a DevOps Zero to Hero course) to demonstrate combining Bash scripting with the AWS CLI and jq for real-world cost/resource tracking.
+A lightweight Bash script that reports on AWS resource usage — S3, EC2, Lambda, and IAM users — and can be scheduled to run automatically via cron. Built as a DevOps learning project to demonstrate combining Bash scripting with the AWS CLI and jq for real-world cost/resource tracking.
 
 Why this exists
 
@@ -32,7 +32,7 @@ jq (JSON processor), used to parse the EC2 describe-instances output
 
 
 bash  sudo apt install jq       # Debian/Ubuntu
-  sudo yum install jq       # RHEL/CentOS/Amazon Linux
+sudo yum install jq       # RHEL/CentOS/Amazon Linux
 
 Installation
 
@@ -74,7 +74,7 @@ Print list of Lambda functions
 Print list of IAM users
 {
     "Users": [
-        { "UserName": "abhishek", ... }
+        { "UserName": "adeena", ... }
     ]
 }
 
