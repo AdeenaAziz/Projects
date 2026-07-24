@@ -1,28 +1,38 @@
-
 services:
   redis:
     image: 'redislabs/redismod'
     ports:
       - '6379:6379'
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 5s
+      timeout: 3s
+      retries: 5
+
   web1:
     restart: on-failure
     build: ./web
     hostname: web1
     ports:
       - '81:5000'
+    depends_on:
+      redis:
+        condition: service_healthy
+
   web2:
     restart: on-failure
     build: ./web
     hostname: web2
     ports:
       - '82:5000'
+    depends_on:
+      redis:
+        condition: service_healthy
+
   nginx:
     build: ./nginx
     ports:
-    - '80:80'
+      - '80:80'
     depends_on:
-    - web1
-    - web2
-
-
-
+      - web1
+      - web2
