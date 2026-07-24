@@ -8,4 +8,4 @@ COPY .yarnrc.yml .
 RUN npm ci
 COPY ./server.js ./
 
-CMD ["npm","start"]
+CMD ["node","server.js"]
